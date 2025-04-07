@@ -1,9 +1,8 @@
 class OauthController < ApplicationController
   def wix_auth
-    redirect_uri = CGI.escape(ENV['WIX_REDIRECT_URL'])
-    scopes = CGI.escape('stores_read orders_read') # Adjust as needed
+    # redirect_uri = CGI.escape(ENV['WIX_REDIRECT_URL'])
+    # scopes = CGI.escape('stores_read orders_read') # Adjust as needed
 
-    auth_url = "https://www.wix.com/installer/install?token=xyz&redirect_uri=#{redirect_uri}&client_id=#{ENV['WIX_CLIENT_ID']}"
     auth_url = "https://www.wix.com/app-market/install/468192a5-ac59-4801-ae39-08fa7a87539f"
 
     redirect_to auth_url
