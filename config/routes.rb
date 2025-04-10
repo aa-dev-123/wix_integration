@@ -12,5 +12,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :orders do
+    collection do
+      get 'import_orders'
+    end
+  end
+
   root 'overviews#index'
 end

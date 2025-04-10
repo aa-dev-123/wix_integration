@@ -81,8 +81,30 @@ class WixService
 
     response["products"].map do |wix_product|
       wix_product = OpenStruct.new(wix_product)
-      byebug
       Project.create(name: wix_product.name, sku: '', product_type: wix_product.productType, description: wix_product.description, price: wix_product.price["price"], currency: wix_product.price["currency"])
+    end
+  end
+
+  def get_orders
+    refresh_token(Authentication.first) unless Shop.first.is_token_active?
+    
+    response = self.class.post(
+      "#{@base_rest_uri}/stores/v2/orders/query",
+      headers: {
+        'Content-Type' => 'application/json',
+        'Authorization' => "Bearer #{Authentication.first.token}"
+      }
+    )
+
+    response = JSON.parse(response.body)
+
+    response["orders"].map do |wix_order|
+      wix_order = OpenStruct.new(wix_order)
+      Order.create(external_reference_id: wix_order.id, subtotal: wix_order.subtotal, shipping: wix_order.totals["shopping"], tax: wix_order.totals["tax"], discount: wix_order.totals["discount"], total: wix_order.totals["total"])
+
+      wix_order.lineItems.each do |line_item|
+        
+      end      
     end
   end
 end

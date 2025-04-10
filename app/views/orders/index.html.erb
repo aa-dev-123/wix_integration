@@ -1,0 +1,11 @@
+<%= link_to "Import Orders", import_orders_orders_path, class: "btn btn-primary" %>
+
+<% @orders.each do |order| %>
+  <div>
+    <%= project.name %>
+    <%= project.description %>
+    <%= project.product_type %>
+    <%= project.currency %>
+    <%= project.price %>
+  </div>
+<% end %>
