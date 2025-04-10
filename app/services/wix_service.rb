@@ -1,5 +1,7 @@
 class WixService
   include HTTParty
+  require 'ostruct'
+
   attr_accessor :base_uri, :base_rest_uri
 
   def initialize
@@ -52,7 +54,7 @@ class WixService
         grant_type: 'refresh_token',
         client_id: ENV['WIX_CLIENT_ID'],
         client_secret: ENV['WIX_CLIENT_SECRET'],
-        code: authorization_code,
+        code: Authentication.first.token,
         refresh_token: authentication.refresh_token
       }.to_json,
       headers: { 'Content-Type' => 'application/json' }
@@ -64,21 +66,23 @@ class WixService
   end
 
   def get_products
+    refresh_token(Authentication.first) unless Shop.first.is_token_active?
+    
     response = self.class.post(
-      "/stores/v1/products/query",
+      "#{@base_rest_uri}/stores/v1/products/query",
       headers: {
         'Content-Type' => 'application/json',
-        'Authorization' => "Bearer #{@auth_token}"
+        'Authorization' => "Bearer #{Authentication.first.token}"
       },
       body: { includeVariants: true }.to_json
     )
 
     response = JSON.parse(response.body)
 
-    response.products.map do |wix_product|
-      
+    response["products"].map do |wix_product|
+      wix_product = OpenStruct.new(wix_product)
+      byebug
+      Project.create(name: wix_product.name, sku: '', product_type: wix_product.productType, description: wix_product.description, price: wix_product.price["price"], currency: wix_product.price["currency"])
     end
-
-    { error: response.message }
   end
 end

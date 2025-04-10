@@ -1,0 +1,11 @@
+<%= link_to "Import Projects", import_projects_projects_path, class: "btn btn-primary" %>
+
+<% @projects.each do |project| %>
+  <div>
+    <%= project.name %>
+    <%= project.description %>
+    <%= project.product_type %>
+    <%= project.currency %>
+    <%= project.price %>
+  </div>
+<% end %>

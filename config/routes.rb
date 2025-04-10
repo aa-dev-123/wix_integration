@@ -6,6 +6,11 @@ Rails.application.routes.draw do
 
   resources :overviews
 
-  resources :projects
+  resources :projects do
+    collection do
+      get 'import_projects'
+    end
+  end
+
   root 'overviews#index'
 end
