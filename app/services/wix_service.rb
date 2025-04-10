@@ -27,6 +27,39 @@ class WixService
       headers: { 'Content-Type' => 'application/json' }
     )
 
-    JSON.parse(response.body)
+    if response.success?
+      tokens = JSON.parse(response.body)
+
+      url = "#{base_rest_uri}/apps/v1/instance"
+
+      response = HTTParty.get(url, headers: { "Authorization" => "Bearer #{tokens['access_token']}" })
+
+      response = JSON.parse(response.body)
+
+      authentication = Authentication.where(uid: response["instance"]["instanceId"]).first_or_initialize
+
+      authentication.update(token: tokens['access_token'], refresh_token: tokens['refresh_token'], token_expires_at: 5.minutes.from_now)
+      
+      shop = Shop.where(authentication_id: authentication.id, name: response["site"]["siteDisplayName"]).first_or_initialize
+
+      shop.save
+    end
+  end
+
+  def refresh_token(authentication)
+    response = self.class.post("#{@base_uri}/oauth/access",
+      body: {
+        grant_type: 'refresh_token',
+        client_id: ENV['WIX_CLIENT_ID'],
+        client_secret: ENV['WIX_CLIENT_SECRET'],
+        code: authorization_code
+        refresh_token: authentication.refresh_token
+      }.to_json,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+
+    tokens = JSON.parse(response.body)
+
+    authentication.update(token: tokens["access_token"], refresh_token: tokens["refresh_token"], token_expires_at: 5.minutes.from_now)
   end
 end

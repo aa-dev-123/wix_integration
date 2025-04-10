@@ -12,13 +12,9 @@ class OauthController < ApplicationController
   def authorize
     if params[:code]
       authorization_code = params[:code]
-      tokens = WixService.new.exchange_code_for_token(authorization_code)
+      successful = WixService.new.exchange_code_for_token(authorization_code)
 
-      if tokens['access_token']
-        # Store the tokens securely in the database later
-        session[:wix_access_token] = tokens['access_token']
-        session[:wix_refresh_token] = tokens['refresh_token']
-
+      if successful
         redirect_to root_path, notice: "Successfully connected to Wix!"
       else
         redirect_to root_path, notice: "Not successful"
