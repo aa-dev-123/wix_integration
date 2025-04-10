@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_04_08_210236) do
+ActiveRecord::Schema.define(version: 2025_04_10_103940) do
 
   create_table "authentications", force: :cascade do |t|
     t.string "token"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2025_04_08_210236) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "uid"
+    t.datetime "token_expires_at"
     t.index ["uid"], name: "index_authentications_on_uid", unique: true
   end
 
