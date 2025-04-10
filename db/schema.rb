@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_04_10_204437) do
+ActiveRecord::Schema.define(version: 2025_04_10_205323) do
 
   create_table "authentications", force: :cascade do |t|
     t.string "token"
@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(version: 2025_04_10_204437) do
     t.string "uid"
     t.datetime "token_expires_at"
     t.index ["uid"], name: "index_authentications_on_uid", unique: true
+  end
+
+  create_table "order_line_items", force: :cascade do |t|
+    t.integer "project_id"
+    t.string "quantity"
+    t.integer "price"
+    t.string "total_price"
+    t.string "discount"
+    t.string "tax"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_order_line_items_on_project_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -55,5 +67,6 @@ ActiveRecord::Schema.define(version: 2025_04_10_204437) do
     t.index ["authentication_id"], name: "index_shops_on_authentication_id"
   end
 
+  add_foreign_key "order_line_items", "projects"
   add_foreign_key "shops", "authentications"
 end
