@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2025_04_10_205323) do
 
   create_table "order_line_items", force: :cascade do |t|
     t.integer "project_id"
+    t.integer "order_id"
     t.string "quantity"
     t.integer "price"
     t.string "total_price"
@@ -31,6 +32,7 @@ ActiveRecord::Schema.define(version: 2025_04_10_205323) do
     t.string "tax"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_order_line_items_on_order_id"
     t.index ["project_id"], name: "index_order_line_items_on_project_id"
   end
 
@@ -67,6 +69,7 @@ ActiveRecord::Schema.define(version: 2025_04_10_205323) do
     t.index ["authentication_id"], name: "index_shops_on_authentication_id"
   end
 
+  add_foreign_key "order_line_items", "orders"
   add_foreign_key "order_line_items", "projects"
   add_foreign_key "shops", "authentications"
 end
