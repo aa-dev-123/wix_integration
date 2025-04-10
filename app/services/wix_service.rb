@@ -52,7 +52,7 @@ class WixService
         grant_type: 'refresh_token',
         client_id: ENV['WIX_CLIENT_ID'],
         client_secret: ENV['WIX_CLIENT_SECRET'],
-        code: authorization_code
+        code: authorization_code,
         refresh_token: authentication.refresh_token
       }.to_json,
       headers: { 'Content-Type' => 'application/json' }
@@ -61,5 +61,24 @@ class WixService
     tokens = JSON.parse(response.body)
 
     authentication.update(token: tokens["access_token"], refresh_token: tokens["refresh_token"], token_expires_at: 5.minutes.from_now)
+  end
+
+  def get_products
+    response = self.class.post(
+      "/stores/v1/products/query",
+      headers: {
+        'Content-Type' => 'application/json',
+        'Authorization' => "Bearer #{@auth_token}"
+      },
+      body: { includeVariants: true }.to_json
+    )
+
+    response = JSON.parse(response.body)
+
+    response.products.map do |wix_product|
+      
+    end
+
+    { error: response.message }
   end
 end

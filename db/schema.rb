@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_04_10_103940) do
+ActiveRecord::Schema.define(version: 2025_04_10_183809) do
 
   create_table "authentications", force: :cascade do |t|
     t.string "token"
@@ -20,6 +20,17 @@ ActiveRecord::Schema.define(version: 2025_04_10_103940) do
     t.string "uid"
     t.datetime "token_expires_at"
     t.index ["uid"], name: "index_authentications_on_uid", unique: true
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.string "deescription"
+    t.integer "price"
+    t.string "currency"
+    t.string "type"
+    t.string "sku"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "shops", force: :cascade do |t|

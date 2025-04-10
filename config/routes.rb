@@ -6,5 +6,6 @@ Rails.application.routes.draw do
 
   resources :overviews
 
+  resources :projects
   root 'overviews#index'
 end
