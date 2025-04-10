@@ -81,7 +81,7 @@ class WixService
 
     response["products"].map do |wix_product|
       wix_product = OpenStruct.new(wix_product)
-      Project.create(name: wix_product.name, sku: '', product_type: wix_product.productType, description: wix_product.description, price: wix_product.price["price"], currency: wix_product.price["currency"])
+      Project.create(external_reference_id: wix_product.id, name: wix_product.name, sku: '', product_type: wix_product.productType, description: wix_product.description, price: wix_product.price["price"], currency: wix_product.price["currency"])
     end
   end
 
