@@ -87,7 +87,6 @@ class WixService
 
   def get_orders
     refresh_token(Authentication.first) unless Shop.first.is_token_active?
-    
     response = self.class.post(
       "#{@base_rest_uri}/stores/v2/orders/query",
       headers: {
@@ -100,10 +99,12 @@ class WixService
 
     response["orders"].map do |wix_order|
       wix_order = OpenStruct.new(wix_order)
-      Order.create(external_reference_id: wix_order.id, subtotal: wix_order.subtotal, shipping: wix_order.totals["shopping"], tax: wix_order.totals["tax"], discount: wix_order.totals["discount"], total: wix_order.totals["total"])
+      order = Order.create(external_reference_id: wix_order.id, subtotal: wix_order.subtotal, shipping: wix_order.totals["shopping"], tax: wix_order.totals["tax"], discount: wix_order.totals["discount"], total: wix_order.totals["total"])
 
       wix_order.lineItems.each do |line_item|
-        
+        line_item = OpenStruct.new(line_item)
+        project = Project.find_by(external_reference_id: line_item.productId)
+        order.order_line_items.create(project_id: project.id, quantity: line_item.quantity, price: line_item.price, total_price: line_item.totalPrice, discount: line_item.discount, tax: line_item.tax)
       end      
     end
   end

@@ -1,9 +1,9 @@
 class OrdersController < ApplicationController
   def index
-    @orders = Orders.all
+    @orders = Order.all
   end
 
-  def import_projects
+  def import_orders
     WixService.new.get_orders
 
     redirect_to orders_path
