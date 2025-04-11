@@ -6,17 +6,13 @@ Rails.application.routes.draw do
 
   resources :overviews
 
-  resources :projects do
-    collection do
+  resources :projects
+  resources :orders
+  resources :shops do
+    member do
+      get 'import_orders'
       get 'import_projects'
     end
   end
-
-  resources :orders do
-    collection do
-      get 'import_orders'
-    end
-  end
-
   root 'overviews#index'
 end

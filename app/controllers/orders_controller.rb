@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   end
 
   def import_orders
-    WixService.new.get_orders
+    WixService.new.get_orders(Shop.first)
 
     redirect_to orders_path
   end
