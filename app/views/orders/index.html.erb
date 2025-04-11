@@ -1,0 +1,21 @@
+
+<% @orders.each do |order| %>
+  <div>
+    <%= order.external_reference_id %>
+    <% order.order_line_items.each do |oli| %>
+      <div>
+        Project: <%= oli.project.name %>
+        Quantity x Price: <%= oli.quantity %> x <%= oli.price %>
+        <%= oli.tax %>
+        <%= oli.discount %>
+        <%= oli.total_price %>
+      </div>
+    <% end %>
+    
+    SubTotal: <%= order.subtotal %>
+    Shipping: <%= order.shipping %>
+    Tax: <%= order.tax %>
+    Discount: <%= order.discount %>
+    Total: <%= order.total %>
+  </div>
+<% end %>
