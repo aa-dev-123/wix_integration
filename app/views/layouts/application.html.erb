@@ -11,6 +11,8 @@
   </head>
 
   <body>
+    <%= render "shared/nav_bar" %>
+
     <% if flash[:notice] %>
       <p class="notice"><%= flash[:notice] %></p>
     <% end %>

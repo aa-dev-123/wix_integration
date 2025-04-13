@@ -1,4 +1,4 @@
-class OverviewsController < ActionController::Base
+class OverviewsController < ApplicationController
   def index
     
   end

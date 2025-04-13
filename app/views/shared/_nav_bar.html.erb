@@ -1,0 +1,14 @@
+<ul class="navbar">
+  <li class="navbar-li"><a class="active" href=<%= shops_path %>>Home</a></li>
+  <%link_to "Home", shops_path%>
+  <li class="navbar-li"><a href="#news">Shops</a></li>
+  <li class="navbar-li"><a href="#contact">Products</a></li>
+  <li class="navbar-li"><a href="#about">Orders</a></li>
+</ul>
+
+<ul class="navbar">
+  <%= link_to "Home", shops_path, class: "active navbar-li" %>
+  <%= link_to "Shops", shops_path, class: "navbar-li" %>
+  <%= link_to "Products", products_path, class: "navbar-li" %>
+  <%= link_to "Orders", orders_path, class: "navbar-li" %>
+</ul>
