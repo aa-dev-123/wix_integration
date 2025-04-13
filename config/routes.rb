@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   get '/oauth/callback', to: 'oauth#wix_callback'
   get '/oauth/authorize', to: 'oauth#authorize'
 
-  resources :overviews
-
   resources :projects
   resources :orders
   resources :shops do
@@ -14,5 +12,5 @@ Rails.application.routes.draw do
       get 'import_projects'
     end
   end
-  root 'overviews#index'
+  root 'shops#index'
 end
