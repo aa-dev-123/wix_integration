@@ -1,10 +1,18 @@
+<h2>Projects</h2>
 
-<% @projects.each do |project| %>
-  <div>
-    <%= project.name %>
-    <%= project.description %>
-    <%= project.product_type %>
-    <%= project.currency %>
-    <%= project.price %>
-  </div>
-<% end %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Product Type</th>
+    <th>Price</th>
+  </tr>
+  <% @projects.each do |project| %>
+    <tr>
+      <td> <%= project.name %> </td>
+      <td> <%= project.description %> </td>
+      <td> <%= project.product_type %> </td>
+      <td> <%= "#{project.currency} #{project.price}" %> </td>
+    </tr>
+  <% end %>
+</table>
