@@ -28,12 +28,7 @@ class WixService
 
     tokens = JSON.parse(response.body)
 
-    authentication = create_authentication(tokens)
-
-    site_info = fetch_site_info(authentication.token)
-    return unless site_info
-
-    @shop = Shop.create(name: site_info["siteDisplayName"], authentication_id: authentication.id)
+    create_shop_and_authentication(tokens)
   end
 
   def refresh_token
@@ -97,16 +92,28 @@ class WixService
     }
   end
 
-  def create_authentication(tokens)
-    authentication = Authentication.create(
-      token: tokens['access_token'],
-      refresh_token: tokens['refresh_token'],
-      token_expires_at: 5.minutes.from_now
-    )
+  def create_authentication(tokens, uid)
+    authentication = Authentication.first_or_initialize(uid: uid)
+
+    if authentication.new_record?
+      authentication.update(token: tokens['access_token'], refresh_token: tokens['refresh_token'], token_expires_at: 5.minutes.from_now)
+    end
 
     authentication
   end
 
+  def create_shop_and_authentication(tokens)
+    site_info = fetch_site_info(tokens['access_token'])
+    return unless site_info
+
+    authentication = create_authentication(tokens, site_info["instance"]["instanceId"])
+
+    @shop = Shop.first_or_initialize(external_shop_id: site_info["siteId"])
+
+    if @shop.new_record?
+      @shop.update(description: site_info["site"]["description"], name: site_info["site"]["siteDisplayName"], url: site_info["site"]["url"], authentication_id: authentication.id)
+    end
+  end
 
   def fetch_site_info(authorization_code = nil)
     response = HTTParty.get("#{BASE_REST_URI}/apps/v1/instance", headers: auth_headers(authorization_code))
