@@ -111,7 +111,7 @@ class WixService
     @shop = Shop.first_or_initialize(external_shop_id: site_info["siteId"])
 
     if @shop.new_record?
-      @shop.update(name: site_info["site"]["siteDisplayName"], url: site_info["site"]["url"], authentication_id: authentication.id)
+      @shop.update(description: site_info["site"]["description"], name: site_info["site"]["siteDisplayName"], url: site_info["site"]["url"], authentication_id: authentication.id)
     end
   end
 
