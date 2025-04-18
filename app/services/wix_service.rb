@@ -126,15 +126,18 @@ class WixService
 
   def create_project(wix_product)
     wix_product = OpenStruct.new(wix_product)
-    Project.create(
-      external_reference_id: wix_product.id,
-      name: wix_product.name,
-      sku: wix_product.sku ? wix_product.sku : nil,
-      product_type: wix_product.productType,
-      description: wix_product.description,
-      price: wix_product.price["price"],
-      currency: wix_product.price["currency"]
-    )
+    project = Project.first_or_initialize(external_reference_id: wix_product.id)
+
+    if project.new_record?
+      project.update(
+        name: wix_product.name,
+        sku: wix_product.sku ? wix_product.sku : nil,
+        product_type: wix_product.productType,
+        description: wix_product.description,
+        price: wix_product.price["price"],
+        currency: wix_product.price["currency"]
+      )
+    end
   end
 
   def create_order(wix_order)
