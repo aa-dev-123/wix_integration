@@ -93,7 +93,7 @@ class WixService
   end
 
   def create_authentication(tokens, uid)
-    authentication = Authentication.first_or_initialize(uid: uid)
+    authentication = Authentication.where(uid: uid).first_or_initialize
 
     if authentication.new_record?
       authentication.update(token: tokens['access_token'], refresh_token: tokens['refresh_token'], token_expires_at: 5.minutes.from_now)
@@ -108,7 +108,7 @@ class WixService
 
     authentication = create_authentication(tokens, site_info["instance"]["instanceId"])
 
-    @shop = Shop.first_or_initialize(external_shop_id: site_info["siteId"])
+    @shop = Shop.where(external_shop_id: site_info["site"]["siteId"]).first_or_initialize
 
     if @shop.new_record?
       @shop.update(description: site_info["site"]["description"], name: site_info["site"]["siteDisplayName"], url: site_info["site"]["url"], authentication_id: authentication.id)
@@ -126,15 +126,19 @@ class WixService
 
   def create_project(wix_product)
     wix_product = OpenStruct.new(wix_product)
-    Project.create(
-      external_reference_id: wix_product.id,
-      name: wix_product.name,
-      sku: '',
-      product_type: wix_product.productType,
-      description: wix_product.description,
-      price: wix_product.price["price"],
-      currency: wix_product.price["currency"]
-    )
+
+    project = Project.where(external_reference_id: wix_product.id).first_or_initialize
+
+    if project.new_record?
+      project.update(
+        name: wix_product.name,
+        sku: wix_product.sku ? wix_product.sku : nil,
+        product_type: wix_product.productType,
+        description: wix_product.description,
+        price: wix_product.price["price"],
+        currency: wix_product.price["currency"]
+      )
+    end
   end
 
   def create_order(wix_order)

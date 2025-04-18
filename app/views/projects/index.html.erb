@@ -3,6 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>SKU</th>
     <th>Description</th>
     <th>Product Type</th>
     <th>Price</th>
@@ -10,6 +11,7 @@
   <% @projects.each do |project| %>
     <tr>
       <td> <%= project.name %> </td>
+      <td> <%= project.sku %> </td>
       <td> <%= project.description %> </td>
       <td> <%= project.product_type %> </td>
       <td> <%= "#{project.currency} #{project.price}" %> </td>
