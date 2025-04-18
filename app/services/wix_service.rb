@@ -129,7 +129,7 @@ class WixService
     Project.create(
       external_reference_id: wix_product.id,
       name: wix_product.name,
-      sku: '',
+      sku: wix_product.sku ? wix_product.sku : nil,
       product_type: wix_product.productType,
       description: wix_product.description,
       price: wix_product.price["price"],
