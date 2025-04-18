@@ -11,6 +11,30 @@
       </tr>
       <tr>
         <td>
+          Description:
+        </td>
+        <td>
+          <%= @shop.description ?  @shop.description : 'N/A' %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          URL:
+        </td>
+        <td>
+          <%= @shop.url ? @shop.url : "N/A" %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Shop ID:
+        </td>
+        <td>
+          <%= @shop.external_shop_id %>
+        </td>
+      </tr>
+      <tr>
+        <td>
           Type:
         </td>
         <td>
