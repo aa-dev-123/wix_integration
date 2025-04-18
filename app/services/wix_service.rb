@@ -126,7 +126,8 @@ class WixService
 
   def create_project(wix_product)
     wix_product = OpenStruct.new(wix_product)
-    project = Project.first_or_initialize(external_reference_id: wix_product.id)
+
+    project = Project.where(external_reference_id: wix_product.id).first_or_initialize
 
     if project.new_record?
       project.update(
