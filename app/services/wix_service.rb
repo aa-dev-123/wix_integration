@@ -150,6 +150,7 @@ class WixService
       order.update(
         external_reference_id: wix_order.id,
         status: wix_order.fulfillmentStatus,
+        payment_status: wix_order.paymentStatus,
         subtotal: wix_order.subtotal,
         shipping: wix_order.totals["shopping"],
         tax: wix_order.totals["tax"],
