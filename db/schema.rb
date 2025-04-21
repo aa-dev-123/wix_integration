@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_04_21_085052) do
+ActiveRecord::Schema.define(version: 2025_04_21_184144) do
 
   create_table "authentications", force: :cascade do |t|
     t.string "token"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2025_04_21_085052) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status"
+    t.string "payment_status"
   end
 
   create_table "projects", force: :cascade do |t|
