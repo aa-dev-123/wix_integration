@@ -13,7 +13,6 @@ class OrdersController < ApplicationController
 
   def webhook
     begin
-      byebug
       payload = JWT.decode(request.raw_post, OpenSSL::PKey::RSA.new(ENV['WIX_PUBLIC_KEY']), true, algorithm: 'RS256').first
 
       event = JSON.parse(payload['data'])
