@@ -32,6 +32,8 @@ gem 'omniauth-oauth2'
 
 gem 'httparty'
 
+gem 'jwt'
+
 gem 'dotenv', groups: [:development, :test]
 
 group :development, :test do

@@ -5,14 +5,16 @@
   <tr>
     <th>External ID</th>
     <th> Line Item Count </th>
-    <th> Status </th>
+    <th> Fullfillment Status </th>
+    <th> Payment Status </th>
     <th>Total</th>
   </tr>
   <% @orders.each do |order| %>
     <tr>
       <td> <%= order.external_reference_id %> </td>
       <td> <%= order.order_line_items.count %> </td>
-      <td> N/A </td>
+      <td> <%= order.status %> </td>
+      <td> <%= order.payment_status %> </td>
       <td> <%= order.total %> </td>
     </tr>
   <% end %>

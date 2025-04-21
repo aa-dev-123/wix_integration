@@ -143,26 +143,33 @@ class WixService
 
   def create_order(wix_order)
     wix_order = OpenStruct.new(wix_order)
-    order = Order.create(
-      external_reference_id: wix_order.id,
-      subtotal: wix_order.subtotal,
-      shipping: wix_order.totals["shopping"],
-      tax: wix_order.totals["tax"],
-      discount: wix_order.totals["discount"],
-      total: wix_order.totals["total"]
-    )
 
-    wix_order.lineItems.each do |line_item|
-      line_item = OpenStruct.new(line_item)
-      project = Project.find_by(external_reference_id: line_item.productId)
-      order.order_line_items.create(
-        project_id: project.id,
-        quantity: line_item.quantity,
-        price: line_item.price,
-        total_price: line_item.totalPrice,
-        discount: line_item.discount,
-        tax: line_item.tax
+    order = Order.where(external_reference_id: wix_order.id).first_or_initialize
+
+    if order.new_record?
+      order.update(
+        external_reference_id: wix_order.id,
+        status: wix_order.fulfillmentStatus,
+        payment_status: wix_order.paymentStatus,
+        subtotal: wix_order.subtotal,
+        shipping: wix_order.totals["shopping"],
+        tax: wix_order.totals["tax"],
+        discount: wix_order.totals["discount"],
+        total: wix_order.totals["total"]
       )
+
+      wix_order.lineItems.each do |line_item|
+        line_item = OpenStruct.new(line_item)
+        project = Project.find_by(external_reference_id: line_item.productId)
+        order.order_line_items.create(
+          project_id: project.id,
+          quantity: line_item.quantity,
+          price: line_item.price,
+          total_price: line_item.totalPrice,
+          discount: line_item.discount,
+          tax: line_item.tax
+        )
+      end
     end
   end
 end

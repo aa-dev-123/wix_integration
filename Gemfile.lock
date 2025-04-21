@@ -308,6 +308,7 @@ DEPENDENCIES
   dotenv
   httparty
   jbuilder (~> 2.7)
+  jwt
   listen (~> 3.3)
   omniauth-oauth2
   puma (~> 5.0)
