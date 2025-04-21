@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get '/oauth/authorize', to: 'oauth#authorize'
   post '/webhook', to: 'orders#webhook'
 
+
   resources :projects
   resources :orders
   resources :shops do
