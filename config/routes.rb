@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get '/auth/wix', to: 'oauth#wix_auth'
   get '/oauth/callback', to: 'oauth#wix_callback'
   get '/oauth/authorize', to: 'oauth#authorize'
+  post '/webhook', to: 'orders#webhook'
 
   resources :projects
   resources :orders
