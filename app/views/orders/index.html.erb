@@ -12,7 +12,7 @@
     <tr>
       <td> <%= order.external_reference_id %> </td>
       <td> <%= order.order_line_items.count %> </td>
-      <td> N/A </td>
+      <td> <%= order.status %> </td>
       <td> <%= order.total %> </td>
     </tr>
   <% end %>

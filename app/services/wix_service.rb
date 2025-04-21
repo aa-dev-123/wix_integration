@@ -146,10 +146,10 @@ class WixService
 
     order = Order.where(external_reference_id: wix_order.id).first_or_initialize
 
-    byebug
     if order.new_record?
-      order = order.update(
+      order.update(
         external_reference_id: wix_order.id,
+        status: wix_order.fulfillmentStatus,
         subtotal: wix_order.subtotal,
         shipping: wix_order.totals["shopping"],
         tax: wix_order.totals["tax"],
