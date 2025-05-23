@@ -3,85 +3,88 @@ This Ruby on Rails application integrates with Wix using custom (legacy) OAuth a
 
 ## ✅ Features
 ### 🔐 Wix OAuth (Custom Authentication)
-  Implements Wix's legacy OAuth flow
+  - Implements Wix's legacy OAuth flow
 
-  Supports:
+  - Supports:
 
-    Requesting access token
+    - Requesting access token
 
-    Refreshing access token
+    - Refreshing access token
 
-    Fetching app instance
+    - Fetching app instance
 
 ### 🏪 Shop Management
-  Users can install the app on a selected Wix site
+  - Users can install the app on a selected Wix site
   
-  Each Wix site is saved as a Shop
+  - Each Wix site is saved as a Shop
   
-  Ensures uniqueness of shops during creation
+  - Ensures uniqueness of shops during creation
 
 ### 📦 Product (Project) Import
-  Imports products from the connected Wix site
+  - Imports products from the connected Wix site
   
-  Stored as Projects in the app
+  - Stored as Projects in the app
   
-  Ensures unique products by SKU
+  - Ensures unique products by SKU
   
-  Skips duplicates using service-level checks
+  - Skips duplicates using service-level checks
 
 ### 🧾 Order & Line Item Import
-  Imports orders and associated line items from the site
+  - Imports orders and associated line items from the site
   
-  Ensures uniqueness of orders
+  - Ensures uniqueness of orders
   
-  Includes fulfillment and payment statuses
+  - Includes fulfillment and payment statuses
   
-  Displays orders and statuses in the UI
+  - Displays orders and statuses in the UI
 
 ### 🔁 Webhook Support
-  Handles the Order Updated webhook from Wix
+  - Handles the Order Updated webhook from Wix
   
-  Implements JWT verification using Wix public key
+  - Implements JWT verification using Wix public key
   
-  Self-hosted webhook endpoint: `POST /webhook`
+  - Self-hosted webhook endpoint: `POST /webhook`
   
-  Setup instructions included below
+  - Setup instructions included below
 
 ## 🖥️ User Interface
-  Basic UI with:
+  - Basic UI with:
   
-    Navigation bar
+    - Navigation bar
     
-    Pages for shops, projects (products), and orders
-    
-    Styling applied throughout
+    - Pages for shops, projects (products), and orders
+      
+    - Styling applied throughout
   
-  All core functionality is integrated into the new UI
+  - All core functionality is integrated into the new UI
+
+## Prerequisitives
+  - There should be a custom app available already in Wix that is published and can be installed on the user's website.
+    - Here is the app install link: https://wix.to/6tj9p3C that I have used
+      - The required permissions can be set on the app from Develop -> Permission.
+      - The webhooks can also be added from Develop -> Webhooks. Category as eCommerce and Event as rder Updated.
+    - In the Custom App Dashboard, Go to Develop -> OAuth from there you can get App ID, App secret Key, App URL and Redirect URL that are listed in .env
 
 ## 📦 Setup Instructions
 1. **Clone the repository:**
 
 ```
-git clone https://github.com/your-username/wix-integration-rails.git
-cd wix-integration-rails
+git clone https://github.com/aa-dev-123/wix_integration.git
+cd wix-integration
 ```
 
-2. Install dependencies:
+2. **Install dependencies:**
 
 ```
 bundle install
-yarn install --check-files
 ```
 
-3. Set up the database:
+3. **Set up the database:**
+Set up database and run rails `db:migrate` to run the migrations
 
-```
-rails db:setup
-```
+4. **Environment Variables:**
 
-4. Environment Variables:
-
-Configure the following in `.env` or using Rails credentials:
+Configure the following variables in `.env` file as we are using dotenv:
 ```
 WIX_CLIENT_ID
 
@@ -94,7 +97,7 @@ WIX_REDIRECT_URL
 WIX_PUBLIC_KEY
 ```
 
-5. Start the server:
+5. **Start the server:**
 
 ```
 rails server
@@ -120,17 +123,17 @@ Verify JWT using your app's public key
 Process and update order status accordingly
 
 ## 🛠️ Tech Stack
-  Ruby on Rails (API + HTML UI)
+  - Ruby on Rails (API + HTML UI)
   
-  Wix REST APIs
+  - Wix REST APIs
   
-  SQLite
+  - SQLite
   
 ## 🚧 Future Improvements
-  Better UI/UX design
+  - Better UI/UX design
   
-  Add more Wix events and product updates to webhooks
+  - Add more Wix events and product updates to webhooks
   
-  Admin dashboard for shops
+  - Admin dashboard for shops
   
-  Automatic syncing of data on schedule
+  - Automatic syncing of data on schedule
