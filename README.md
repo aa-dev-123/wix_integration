@@ -58,6 +58,12 @@ This Ruby on Rails application integrates with Wix using custom (legacy) OAuth a
   
   - All core functionality is integrated into the new UI
 
+## 🧰 Requirements
+
+- Ruby: 3.0.7
+- Rails: 6.1.7
+- Ngrok for the local testing of the webhooks
+
 ## Prerequisitives
   - There should be a custom app available already in Wix that is published and can be installed on the user's website.
     - Here is the app install link: https://wix.to/6tj9p3C that I have used
