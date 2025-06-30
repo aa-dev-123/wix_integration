@@ -33,8 +33,10 @@ gem 'omniauth-oauth2'
 gem 'httparty'
 
 gem 'jwt'
-
+gem 'repost'
 gem 'dotenv', groups: [:development, :test]
+gem 'omniauth-wix', path: '../../omniauth-wix'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
