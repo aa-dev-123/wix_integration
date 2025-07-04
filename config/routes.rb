@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   get '/auth/wix/callback' => 'authentications#create'
   post '/auth/wix/callback' => 'authentications#create'
   get '/auth/wix' => 'authentications#blank'
-  get '/oauth/callback', to: 'oauth#wix_callback'
-  get '/oauth/authorize', to: 'oauth#authorize'
+  # get '/oauth/callback', to: 'oauth#wix_callback'
+  # get '/oauth/authorize', to: 'oauth#authorize'
   post '/webhook', to: 'orders#webhook'
 
   resources :projects
