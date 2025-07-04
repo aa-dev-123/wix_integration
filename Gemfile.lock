@@ -1,3 +1,10 @@
+PATH
+  remote: ../../omniauth-wix
+  specs:
+    omniauth-wix (0.2.0)
+      omniauth-oauth2
+      rest-client
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -81,6 +88,7 @@ GEM
     crass (1.0.6)
     csv (3.3.3)
     date (3.4.1)
+    domain_name (0.6.20240107)
     dotenv (3.1.7)
     erubi (1.13.1)
     faraday (2.12.2)
@@ -102,6 +110,9 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
+    http-accept (1.7.0)
+    http-cookie (1.0.8)
+      domain_name (~> 0.5)
     httparty (0.23.1)
       csv
       mini_mime (>= 1.0.0)
@@ -129,6 +140,10 @@ GEM
     marcel (1.0.4)
     matrix (0.4.2)
     method_source (1.1.0)
+    mime-types (3.7.0)
+      logger
+      mime-types-data (~> 3.2025, >= 3.2025.0507)
+    mime-types-data (3.2025.0624)
     mini_mime (1.1.5)
     minitest (5.25.4)
     msgpack (1.7.5)
@@ -144,6 +159,7 @@ GEM
       timeout
     net-smtp (0.5.0)
       net-protocol
+    netrc (0.11.0)
     nio4r (2.7.4)
     nokogiri (1.17.2-aarch64-linux)
       racc (~> 1.4)
@@ -170,6 +186,9 @@ GEM
       rack-protection
     omniauth-oauth2 (1.8.0)
       oauth2 (>= 1.4, < 3)
+      omniauth (~> 2.0)
+    omniauth-rails_csrf_protection (1.0.2)
+      actionpack (>= 4.2)
       omniauth (~> 2.0)
     public_suffix (6.0.1)
     puma (5.6.9)
@@ -218,6 +237,12 @@ GEM
     rb-inotify (0.11.1)
       ffi (~> 1.0)
     regexp_parser (2.10.0)
+    repost (0.4.2)
+    rest-client (2.1.0)
+      http-accept (>= 1.7.0, < 2.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rexml (3.4.0)
     rubyzip (2.3.2)
     sass-rails (6.0.0)
@@ -311,9 +336,12 @@ DEPENDENCIES
   jwt
   listen (~> 3.3)
   omniauth-oauth2
+  omniauth-rails_csrf_protection
+  omniauth-wix!
   puma (~> 5.0)
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1.7, >= 6.1.7.3)
+  repost
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)
   spring
